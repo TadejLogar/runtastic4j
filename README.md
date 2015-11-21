@@ -9,7 +9,7 @@ This is __NOT__ an official API.
 Create a new instance of the Runtastic object.
 You need to pass a HTML client to the Runtastic Constructor.
 You have to create the HTTP client yourself by implementing RuntasticHttpClient.
-The OkHttpRunClient example class uses the OkHttp Library.
+Below you can find an [example implementation](#HttpClient example) of the RuntasticHttpClient using OkHttp.
 ```java
 Runtastic runtastic = new Runtastic(new OkHttpRunClient());
 ```
@@ -31,6 +31,11 @@ RuntasticUser user = runtastic.getUser()
 ```
 
 ### HttpClient example
+
+This is an Example implementation of RuntasticHttpClient using [OkHttp](http://square.github.io/okhttp/).
+You can use this implementation or create your own implementation of RuntasticHttpClient
+using a Java Http Client of your choice.
+
 ```java
 public class OkHttpRunClient implements RuntasticHttpClient {
 
