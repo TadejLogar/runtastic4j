@@ -22,10 +22,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
+        <module name="Runtastic4J" />
         <module name="RuntasticAPI" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="Runtastic4J" target="1.6" />
       <module name="RuntasticAPI" target="1.6" />
     </bytecodeTargetLevel>
   </component>
