@@ -55,38 +55,33 @@ public class OkHttpRunClient implements RuntasticHttpClient {
     }
 
     @Override
-    public RunResponse getResponse(String url, RequestMethod rm, @Nullable HashMap<String, String> postParams) throws IOException {
+    public RunResponse postResponse(final String url, @NotNull final HashMap<String, String> postParams) throws IOException {
 
-        RequestBody rb = null;
+        FormEncodingBuilder paramBuilder = new FormEncodingBuilder();
 
-        if (postParams != null) {
-            FormEncodingBuilder paramBuilder = new FormEncodingBuilder();
-
-            for (Map.Entry<String, String> entry : postParams.entrySet()) {
-                paramBuilder.add(entry.getKey(), entry.getValue());
-            }
-
-            rb = paramBuilder.build();
+        for (Map.Entry<String, String> entry : postParams.entrySet()) {
+            paramBuilder.add(entry.getKey(), entry.getValue());
         }
 
-        Request.Builder rqBuilder = new Request.Builder();
+        RequestBody rb = paramBuilder.build();
 
-        rqBuilder.url(url);
-
-        if (rm == null || rm == RequestMethod.GET) {
-            rqBuilder.get();
-        } else if (rm == RequestMethod.POST && rb != null) {
-            rqBuilder.post(rb);
-        } else {
-            throw new IOException();
-        }
-
-        Request request = rqBuilder.build();
+        Request request = new Request.Builder().url(url).post(rb).build();
 
         Response response = client.newCall(request).execute();
 
         return new RunResponse(response.code(), response.body().string());
     }
+
+    @Override
+    public RunResponse getResponse(final String url) throws IOException {
+
+        Request request = new Request.Builder().url(url).get().build();
+
+        Response response = client.newCall(request).execute();
+
+        return new RunResponse(response.code(), response.body().string());
+    }
+}
 ```
 
 

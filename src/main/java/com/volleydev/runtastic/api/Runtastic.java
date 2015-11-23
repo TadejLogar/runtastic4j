@@ -62,7 +62,7 @@ public class Runtastic {
         postValues.put("authenticity_token", authToken);
 
 
-        RunResponse response = client.getResponse(LOGIN_URL, RuntasticHttpClient.RequestMethod.POST, postValues);
+        RunResponse response = client.postResponse(LOGIN_URL, postValues);
 
 
         if (response.getStatusCode() != 200) {
@@ -96,8 +96,7 @@ public class Runtastic {
         if (!loggedIn || loginResponse == null)
             throw new IOException("You have to log in to access your activities");
 
-        RunResponse sessionListResponse = client.getResponse(BASE_URL + loginResponse.getCurrent_user().getRun_sessions_path(),
-                RuntasticHttpClient.RequestMethod.GET, null);
+        RunResponse sessionListResponse = client.getResponse(BASE_URL + loginResponse.getCurrent_user().getRun_sessions_path());
 
         if (sessionListResponse.getStatusCode() != 200) {
             throw new IOException("Http status code is: " + sessionListResponse.getStatusCode() + ", should be 200");
@@ -124,7 +123,7 @@ public class Runtastic {
         postValues.put("items", String.join(",", idList));
         postValues.put("authenticity_token", authToken);
 
-        RunResponse activityListResponse = client.getResponse(SESSION_API_URL, RuntasticHttpClient.RequestMethod.POST, postValues);
+        RunResponse activityListResponse = client.postResponse(SESSION_API_URL, postValues);
 
         if (activityListResponse.getStatusCode() != 200) {
             throw new IOException("Http status code is: " + sessionListResponse.getStatusCode() + ", should be 200");

@@ -1,6 +1,6 @@
 package com.volleydev.runtastic.api;
 
-import com.sun.istack.internal.Nullable;
+import com.sun.istack.internal.NotNull;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -25,13 +25,10 @@ import java.util.HashMap;
  */
 public interface RuntasticHttpClient {
 
-    enum RequestMethod {
-        GET,
-        POST
-    }
-
     void initialize();
 
-    RunResponse getResponse(String url, RequestMethod rm, @Nullable HashMap<String, String> postParams) throws IOException;
+    RunResponse getResponse(final String url) throws IOException;
+
+    RunResponse postResponse(final String url, @NotNull final HashMap<String, String> postParams) throws IOException;
 
 }
