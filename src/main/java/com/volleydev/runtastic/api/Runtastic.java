@@ -129,9 +129,7 @@ public class Runtastic {
             throw new IOException("Http status code is: " + sessionListResponse.getStatusCode() + ", should be 200");
         }
 
-        List<RuntasticActivity> activityList = parseActivityList(activityListResponse.getResponseBody());
-
-        return activityList;
+        return parseActivityList(activityListResponse.getResponseBody());
     }
 
     private List<RuntasticActivity> parseActivityList(String activityListResponse) {
@@ -157,7 +155,7 @@ public class Runtastic {
             activity.setWeather(entry.getString("weather"));
             activity.setWeather_id(entry.get("weather_id"));
             activity.setPage_url(entry.getString("page_url"));
-            activity.setMap_url(entry.getString("map_url"));
+            activity.setMap_url(entry.get("map_url") == JSONObject.NULL ? null : entry.getString("map_url"));
             activity.setDate(entry.getJSONObject("date"));
 
             runtasticActivityList.add(activity);
